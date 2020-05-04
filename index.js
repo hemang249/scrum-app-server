@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use("/", routes);
+app.use("/api", routes);
 
 app.listen(config.port, () => {
   console.log("Server started on port " + config.port);
