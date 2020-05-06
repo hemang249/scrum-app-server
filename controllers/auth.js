@@ -7,9 +7,9 @@ const config = require("../common/config");
 module.exports = {
   register: async (req, res) => {
     try {
-      const { username, email, password, avatar } = req.body;
+      const { username, email, password } = req.body;
       const hash = utils.encrypt(password);
-      const user = new User({ username, email, avatar, password: hash });
+      const user = new User({ username, email, password: hash });
       await user.save();
       res.status(200).json({ user, done: true });
     } catch (err) {
@@ -45,7 +45,7 @@ module.exports = {
     userProperty: "auth",
   }),
 
-  isAuthenticated: async (req, res) => {
+  isAuthenticated: async (req, res, next) => {
     let check = req.profile && req.auth && req.auth._id == req.profile._id;
 
     if (!check) {
@@ -61,6 +61,7 @@ module.exports = {
       req.profile = user;
       next();
     } catch (err) {
+      console.log(err);
       res
         .status(404)
         .json({ error: "No such user exists! Please login again" });

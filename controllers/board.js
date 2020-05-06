@@ -9,7 +9,7 @@ module.exports = {
         username: req.profile.username,
       };
 
-      const board = new Board({ name, createBoard });
+      const board = new Board({ name, createdBy });
       await board.save();
       res.status(200).json({ board, done: true });
     } catch (err) {
@@ -23,9 +23,11 @@ module.exports = {
   getBoardById: async (req, res, next, id) => {
     try {
       const board = await Board.findOne({ _id: id });
+      console.log(board);
       req.board = board;
       next();
     } catch (err) {
+      console.log(err);
       res.status(404).json({ error: "No such board exists" });
     }
   },
@@ -52,6 +54,21 @@ module.exports = {
       res
         .status(400)
         .json({ error: "Unable to delete the board", done: false });
+    }
+  },
+
+  updateBoard: async (req, res) => {
+    try {
+      const board = req.board;
+      board.todoTickets = req.body.board.todoTickets;
+      board.doingTickets = req.body.board.doingTickets;
+      board.doneTickets = req.body.board.doneTickets;
+      board.iceboxTickets = req.body.board.iceboxTickets;
+      await board.save();
+      res.status(200).json({ board });
+    } catch (err) {
+      console.log("updateBoard : " + err);
+      res.status(400).json({ error: "Unable to update the board" });
     }
   },
 };

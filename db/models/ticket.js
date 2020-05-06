@@ -9,18 +9,9 @@ const ticketSchema = new mongoose.Schema(
     },
 
     category: {
-      type: {
-        categoryId: {
-          type: ObjectId,
-          ref: "Category",
-          required: true,
-        },
-
-        categoryName: {
-          type: String,
-          required: true,
-        },
-      },
+      type: String,
+      lowercase: true,
+      required: true,
     },
 
     board: {
@@ -39,21 +30,6 @@ const ticketSchema = new mongoose.Schema(
     },
 
     createdBy: {
-      type: {
-        userId: {
-          type: ObjectId,
-          ref: "User",
-          required: true,
-        },
-
-        username: {
-          type: String,
-          required: true,
-        },
-      },
-    },
-
-    assignedTo: {
       type: {
         userId: {
           type: ObjectId,

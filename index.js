@@ -13,6 +13,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use("/api", routes);
 
+connectToMongo();
+
 app.listen(config.port, () => {
   console.log("Server started on port " + config.port);
 });

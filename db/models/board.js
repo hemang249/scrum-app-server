@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+require("./category");
+require("./ticket");
 const { ObjectId } = mongoose.Schema;
 
 const boardSchema = new mongoose.Schema(
@@ -23,13 +25,25 @@ const boardSchema = new mongoose.Schema(
       },
     },
 
-    categories: {
-      type: [mongoose.model("Category").schema],
+    todoTickets: {
+      type: [mongoose.model("Ticket").schema],
       required: false,
       default: [],
     },
 
-    tickets: {
+    doingTickets: {
+      type: [mongoose.model("Ticket").schema],
+      required: false,
+      default: [],
+    },
+
+    doneTickets: {
+      type: [mongoose.model("Ticket").schema],
+      required: false,
+      default: [],
+    },
+
+    iceboxTickets: {
       type: [mongoose.model("Ticket").schema],
       required: false,
       default: [],
